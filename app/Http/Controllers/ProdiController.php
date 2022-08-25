@@ -31,7 +31,9 @@ class ProdiController extends Controller
         $Prodi->Nama_Prodi=$request->Nama_Prodi;
         $Prodi->save();
 
-        return "Data Tersimpan";
+        return response()->json([
+            'message' => 'Data telah ditambahkan'
+        ]);
     }
 
     public function update (Request $request, $id){
@@ -40,19 +42,26 @@ class ProdiController extends Controller
 
         $Prodi->save();
 
-        return "Data Terupdate";
+        return response()->json([
+            'message' => 'Data telah diupdate'
+        ]);
     }
 
     public function delete($id){
         $Prodi=Prodi::Find($id);
         $Prodi->delete();
 
-        return "Data Terhapus";
+        return response()->json([
+            'message' => 'Data telah dihapus'
+        ]);
     }
 
     public function detail($id){
         $Prodi=Prodi::Find($id);
 
-        return $Prodi;
+        return response()->json([
+            'status' => 'success',
+            'data' => $Prodi
+        ]);
     }
 }

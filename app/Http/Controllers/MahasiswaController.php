@@ -33,7 +33,9 @@ class MahasiswaController extends Controller
         $Mahasiswa->Alamat=$request->Alamat;
         $Mahasiswa->save();
 
-        return "Data Tersimpan";
+        return response()->json([
+            'message' => 'Data telah ditambahkan'
+        ]);
     }
 
     public function update (Request $request, $id){
@@ -43,19 +45,26 @@ class MahasiswaController extends Controller
         $Mahasiswa->Alamat=$request->Alamat;
         $Mahasiswa->save();
 
-        return "Data Terupdate";
+        return response()->json([
+            'message' => 'Data telah diupdate'
+        ]);
     }
 
     public function delete($id){
         $Mahasiswa=Mahasiswa::Find($id);
         $Mahasiswa->delete();
 
-        return "Data Terhapus";
+        return response()->json([
+            'message' => 'Data telah dihapus'
+        ]);
     }
 
     public function detail($id){
         $Mahasiswa=Mahasiswa::Find($id);
 
-        return $Mahasiswa;
+        return response()->json([
+            'status' => 'success',
+            'data' => $Mahasiswa
+        ]);
     }
 }

@@ -31,7 +31,9 @@ class JurusanController extends Controller
         $Jurusan->Nama_Jurusan=$request->Nama_Jurusan;
         $Jurusan->save();
 
-        return "Data Tersimpan";
+        return response()->json([
+            'message' => 'Data telah ditambahkan'
+        ]);
     }
 
     public function update (Request $request, $id){
@@ -39,19 +41,26 @@ class JurusanController extends Controller
         $Jurusan->Nama_Jurusan=$request->Nama_Jurusan;
         $Jurusan->save();
 
-        return "Data Terupdate";
+        return response()->json([
+            'message' => 'Data telah diupdate'
+        ]);
     }
 
     public function delete($id){
         $Jurusan=Jurusan::Find($id);
         $Jurusan->delete();
 
-        return "Data Terhapus";
+        return response()->json([
+            'message' => 'Data telah dihapus'
+        ]);
     }
 
     public function detail($id){
         $Jurusan=Jurusan::Find($id);
 
-        return $Jurusan;
+        return response()->json([
+            'status' => 'success',
+            'data' => $Jurusan
+        ]);
     }
 }
