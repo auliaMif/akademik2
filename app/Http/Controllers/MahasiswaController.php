@@ -3,15 +3,31 @@
 namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Database\QueryException;
+use Yajra\DataTables\Facades\DataTables;
 
 class MahasiswaController extends Controller
 {
     public function index(){
-        $Mahasiswa=Mahasiswa::all();
+        try {
+            $Mahasiswa = Mahasiswa::with(['mahasiswa'])->get();
+            return isset($Mahasiswa->datatable) && $Mahasiswa->datatable == 'true' ? DataTables::of($Mahasiswa)->make(true) : response()->json([
+                'status' => true,
+                'data' => $Mahasiswa
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ], 500);
+        
+        }
+        // $Mahasiswa=Mahasiswa::all();
 
-        $data=['mahasiswa'=>$Mahasiswa];
+        // $data=['mahasiswa'=>$Mahasiswa];
 
-        return $data;
+        // return $data;
     }
 
     public function create(Request $request){

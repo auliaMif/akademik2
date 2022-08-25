@@ -3,15 +3,31 @@
 namespace App\Http\Controllers;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Database\QueryException;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProdiController extends Controller
 {
     public function index(){
-        $Prodi=Prodi::all();
+        try {
+            $Prodi = Prodi::with(['prodi'])->get();
+            return isset($Prodi->datatable) && $Prodi->datatable == 'true' ? DataTables::of($Prodi)->make(true) : response()->json([
+                'status' => true,
+                'data' => $Prodi
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ], 500);
+        
+        }
+        // $Prodi=Prodi::all();
 
-        $data=['prodi'=>$Prodi];
+        // $data=['prodi'=>$Prodi];
 
-        return $data;
+        // return $data;
     }
 
     public function create(Request $request){

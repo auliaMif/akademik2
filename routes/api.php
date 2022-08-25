@@ -24,17 +24,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/mahasiswa', [MahasiswaController::class,'index']);
 Route::post('/mahasiswa', [MahasiswaController::class,'create']);
 Route::get('/mahasiswa/{id}', [MahasiswaController::class,'detail']);
-Route::put('/mahasiswa/{id}', [MahasiswaController::class,'update']);
+Route::post('/mahasiswa/{id}', [MahasiswaController::class,'update']);
 Route::delete('/mahasiswa/{id}', [MahasiswaController::class,'delete']);
 
 Route::get('/jurusan', [JurusanController::class,'index']);
 Route::post('/jurusan', [JurusanController::class,'create']);
 Route::get('/jurusan/{id}', [JurusanController::class,'detail']);
-Route::put('/jurusan/{id}', [JurusanController::class,'update']);
+Route::post('/jurusan/{id}', [JurusanController::class,'update']);
 Route::delete('/jurusan/{id}', [JurusanController::class,'delete']);
 
 Route::get('/prodi', [ProdiController::class,'index']);
 Route::post('/prodi', [ProdiController::class,'create']);
 Route::get('/prodi/{id}', [ProdiController::class,'detail']);
-Route::put('/prodi/{id}', [ProdiController::class,'update']);
+Route::post('/prodi/{id}', [ProdiController::class,'update']);
 Route::delete('/prodi/{id}', [ProdiController::class,'delete']);

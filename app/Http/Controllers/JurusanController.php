@@ -3,15 +3,31 @@
 namespace App\Http\Controllers;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Database\QueryException;
+use Yajra\DataTables\Facades\DataTables;
 
 class JurusanController extends Controller
 {
     public function index(){
-        $Jurusan=Jurusan::all();
+        try {
+            $Jurusan = Jurusan::with(['jurusan'])->get();
+            return isset($Jurusan->datatable) && $Jurusan->datatable == 'true' ? DataTables::of($Jurusan)->make(true) : response()->json([
+                'status' => true,
+                'data' => $Jurusan
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ], 500);
+        
+        }
+        // $Jurusan=Jurusan::all();
 
-        $data=['jurusan'=>$Jurusan];
+        // $data=['jurusan'=>$Jurusan];
 
-        return $data;
+        // return $data;
     }
 
     public function create(Request $request){
