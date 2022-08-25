@@ -11,11 +11,7 @@ class JurusanController extends Controller
 {
     public function index(){
         try {
-            $Jurusan = Jurusan::with(['jurusan'])->get();
-            return isset($Jurusan->datatable) && $Jurusan->datatable == 'true' ? DataTables::of($Jurusan)->make(true) : response()->json([
-                'status' => true,
-                'data' => $Jurusan
-            ]);
+            return DataTables::of(Jurusan::query())->make();
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),

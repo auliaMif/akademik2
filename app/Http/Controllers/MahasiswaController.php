@@ -11,11 +11,7 @@ class MahasiswaController extends Controller
 {
     public function index(){
         try {
-            $Mahasiswa = Mahasiswa::with(['mahasiswa'])->get();
-            return isset($Mahasiswa->datatable) && $Mahasiswa->datatable == 'true' ? DataTables::of($Mahasiswa)->make(true) : response()->json([
-                'status' => true,
-                'data' => $Mahasiswa
-            ]);
+            return DataTables::of(Mahasiswa::query())->make();
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),

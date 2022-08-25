@@ -11,11 +11,7 @@ class ProdiController extends Controller
 {
     public function index(){
         try {
-            $Prodi = Prodi::with(['prodi'])->get();
-            return isset($Prodi->datatable) && $Prodi->datatable == 'true' ? DataTables::of($Prodi)->make(true) : response()->json([
-                'status' => true,
-                'data' => $Prodi
-            ]);
+            return DataTables::of(Prodi::query())->make();
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
